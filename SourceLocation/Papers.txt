@@ -1,0 +1,18 @@
+https://arxiv.org/abs/1311.1047
+	A Geometric Approach to Sound Source Localization from Time-Delay Estimates
+	Xavier Alameda-Pineda and Radu Horaud
+	
+
+https://arxiv.org/abs/2108.08928
+	Locating earthquake epicenter without a seismic velocity model
+	Rong Qiang Wei
+
+
+https://einfo.cecs.ufabc.edu.br/images/TG_EINFO/2019_3_henrique_santos.pdf
+	Localização de Fontes Sonoras por TDOA e Função de Coerência Semblance
+	Henrique Ferreira dos Santos
+
+
+https://geo.mff.cuni.cz/~jz/prednaska_seismologie/2020_4/cetba/Waldhauser_Ellsworth_BSSA2000.pdf
+	A Double-Difference Earthquake Location Algorithm: Method and Application to the Northern Hayward Fault, California
+	Felix Waldhauser and William L. Ellsworth

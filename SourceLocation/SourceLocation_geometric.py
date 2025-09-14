@@ -55,7 +55,7 @@ view = 1
 if view:
     vmax = .1
     vmin = -vmax
-    im = plt.imshow(p_0, vmin=vmin, vmax=vmax, cmap="bwr", extent=[0, Nx, 0, Ny], origin="lower")
+    # im = plt.imshow(p_0, vmin=vmin, vmax=vmax, cmap="bwr", extent=[0, Nx, 0, Ny], origin="lower")
 
 xs = np.random.randint(1, Nx-2)
 ys = np.random.randint(1, Ny-2)
@@ -66,18 +66,18 @@ for nt in tqdm(range(Nt)):
     p_0[ys, xs] += s[nt]
     m[nt] = p_0[1] + .001*np.random.randn()
     
-    if view:
-        if not nt % view:
-            im.set_data(p_0)
-            plt.pause(1e-12)
+    # if view:
+    #     if not nt % view:
+    #         im.set_data(p_0)
+    #         plt.pause(1e-12)
 
 #%%
 print("#########################################################")
 # Source Founding
 
-view = False
+view = True
 
-from scipy.optimize import differential_evolution, minimize
+from scipy.optimize import differential_evolution
 
 def emulate_source(xs_emulated, ys_emulated, s, Nt, Nx, Ny, a1, a2, c2, h, view=False):
     p_0 = np.zeros((Ny, Nx), dtype=np.float32)
@@ -157,41 +157,26 @@ bounds = [(1, Nx-2), (1, Ny-2)]
 
 it = 1
 final_error = 100
+error_threshold = 0.5
 
-while final_error >= 0.5:
+while final_error >= error_threshold:
     print("Running differential_evolution...")
-    de_output = differential_evolution(cost_function, bounds, strategy='best1bin', maxiter=30, popsize=12, disp=view, workers=-1)
+    de_output = differential_evolution(cost_function, bounds, strategy='best1bin', maxiter=20, popsize=12, disp=view, workers=-1, polish=True)
     final_error = de_output.fun
 
-    if final_error < 0.5:
-        xs_est, ys_est = int(round(de_output.x[0])), int(round(de_output.x[1]))
+    if final_error >= error_threshold:
+        print("Error too large, attempting to find a new solution! Iteration number:", it)
+        it += 1
 
-        print("#########################################################")
-        print(f"Original source position: xs={xs} ys={ys}")
-        print(f"DE.x result = {de_output.x} rounding -> xs_est={xs_est}, ys_est={ys_est}")
-        print(f"Final error: {de_output.fun}")
-        print("#########################################################")
-        break
+xs_est, ys_est = int(round(de_output.x[0])), int(round(de_output.x[1]))
 
-    print("Refining with L-BFGS-B...")
-    minimize_output = minimize(cost_function, de_output.x, method='L-BFGS-B', bounds=bounds, options={'disp': view, 'maxiter': 200})
-    final_error = minimize_output.fun
-        
-    if final_error < 0.5:
-        xs_est, ys_est = int(round(minimize_output.x[0])), int(round(minimize_output.x[1]))
+print("#########################################################")
+print(f"Original source position: xs={xs} ys={ys}")
+print(f"DE.x result = {de_output.x} rounding -> xs_est={xs_est}, ys_est={ys_est}")
+print(f"Final error: {de_output.fun}")
+print("#########################################################")
 
-        print("#########################################################")
-        print(f"Original source position: xs={xs} ys={ys}")
-        print(f"DE.x result = {de_output.x}")
-        print(f"Refined result = {minimize_output.x}, rounding -> xs_est={xs_est}, ys_est={ys_est}")
-        print(f"Final error: {minimize_output.fun}")
-        print("#########################################################")
-        break
-    
-    print("Error too large, attempting to find a new solution! Iteration number:", it)
-    it += 1
-
-fonte_encontrada = emulate_source(xs_est, ys_est, s, Nt, Nx, Ny, a1, a2, c2, h, view=True)
+# fonte_encontrada = emulate_source(xs_est, ys_est, s, Nt, Nx, Ny, a1, a2, c2, h, view=True)
 
 plt.figure()
 plt.imshow(np.zeros((Ny, Nx)), cmap='gray', extent=[0, Nx, 0, Ny], origin='lower')

@@ -64,7 +64,7 @@ for nt in tqdm(range(Nt)):
     p_1, p_2 = p_0, p_1
     p_0 = a1 * p_1 + a2 * p_2 + c2 * ndi.convolve(p_1,h)
     p_0[ys, xs] += s[nt]
-    m[nt] = p_0[1] + .001*np.random.randn()
+    m[nt] = p_0[1] + .010*np.random.randn()
     
     # if view:
     #     if not nt % view:
@@ -75,7 +75,7 @@ for nt in tqdm(range(Nt)):
 print("#########################################################")
 # Source Founding
 
-view = True
+view = False
 
 from scipy.optimize import differential_evolution
 
@@ -174,7 +174,6 @@ print("#########################################################")
 print(f"Original source position: xs={xs} ys={ys}")
 print(f"DE.x result = {de_output.x} rounding -> xs_est={xs_est}, ys_est={ys_est}")
 print(f"Final error: {de_output.fun}")
-print("#########################################################")
 
 # fonte_encontrada = emulate_source(xs_est, ys_est, s, Nt, Nx, Ny, a1, a2, c2, h, view=True)
 

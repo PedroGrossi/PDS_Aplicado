@@ -170,7 +170,7 @@ error_threshold = 1
 
 while final_error >= error_threshold:
     print("Running differential_evolution...")
-    de_output = differential_evolution(cost_function, bounds, strategy='best1bin', maxiter=20, popsize=12, disp=view, workers=-1, polish=True)
+    de_output = differential_evolution(cost_function, bounds, strategy='best1bin', maxiter=30, popsize=12, disp=view, workers=-1, polish=True)
     final_error = de_output.fun
 
     if final_error > error_threshold:

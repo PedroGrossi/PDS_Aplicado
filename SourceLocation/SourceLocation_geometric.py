@@ -15,7 +15,7 @@ dy = .05
 Nx = round(Lx/dx)
 Ny = round(Ly/dy)
 
-Lt = .05 # Simulation time [s]
+Lt = .04 # Simulation time [s]
 dt = 1e-4
 Nt = round(Lt/dt)
 fs = 1 / dt
@@ -55,7 +55,7 @@ view = 1
 if view:
     vmax = .1
     vmin = -vmax
-    # im = plt.imshow(p_0, vmin=vmin, vmax=vmax, cmap="bwr", extent=[0, Nx, 0, Ny], origin="lower")
+    im = plt.imshow(p_0, vmin=vmin, vmax=vmax, cmap="bwr", extent=[0, Nx, 0, Ny], origin="lower")
 
 xs = np.random.randint(1, Nx-2)
 ys = np.random.randint(1, Ny-2)
@@ -64,12 +64,12 @@ for nt in tqdm(range(Nt)):
     p_1, p_2 = p_0, p_1
     p_0 = a1 * p_1 + a2 * p_2 + c2 * ndi.convolve(p_1,h)
     p_0[ys, xs] += s[nt]
-    m[nt] = p_0[1] + .010*np.random.randn()
+    m[nt] = p_0[1] + .001*np.random.randn()
     
-    # if view:
-    #     if not nt % view:
-    #         im.set_data(p_0)
-    #         plt.pause(1e-12)
+    if view:
+        if not nt % view:
+            im.set_data(p_0)
+            plt.pause(1e-12)
 
 #%%
 print("#########################################################")
@@ -175,7 +175,7 @@ print(f"Original source position: xs={xs} ys={ys}")
 print(f"DE.x result = {de_output.x} rounding -> xs_est={xs_est}, ys_est={ys_est}")
 print(f"Final error: {de_output.fun}")
 
-# fonte_encontrada = emulate_source(xs_est, ys_est, s, Nt, Nx, Ny, a1, a2, c2, h, view=True)
+fonte_encontrada = emulate_source(xs_est, ys_est, s, Nt, Nx, Ny, a1, a2, c2, h, view=True)
 
 plt.figure()
 plt.imshow(np.zeros((Ny, Nx)), cmap='gray', extent=[0, Nx, 0, Ny], origin='lower')

@@ -16,3 +16,6 @@ https://einfo.cecs.ufabc.edu.br/images/TG_EINFO/2019_3_henrique_santos.pdf
 https://geo.mff.cuni.cz/~jz/prednaska_seismologie/2020_4/cetba/Waldhauser_Ellsworth_BSSA2000.pdf
 	A Double-Difference Earthquake Location Algorithm: Method and Application to the Northern Hayward Fault, California
 	Felix Waldhauser and William L. Ellsworth
+
+wasserstein distance
+utilizar delays

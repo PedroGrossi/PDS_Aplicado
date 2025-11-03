@@ -55,7 +55,7 @@ view = 1
 if view:
     vmax = .1
     vmin = -vmax
-    # im = plt.imshow(p_0, vmin=vmin, vmax=vmax, cmap="bwr", extent=[0, Nx, 0, Ny], origin="lower")
+    im = plt.imshow(p_0, vmin=vmin, vmax=vmax, cmap="bwr", extent=[0, Nx, 0, Ny], origin="lower")
 
 xs1 = np.random.randint(1, Nx-2)
 ys1 = np.random.randint(1, Ny-2)
@@ -73,10 +73,10 @@ for nt in tqdm(range(Nt)):
     p_0[ys2, xs2] += s[nt]
     m[nt] = p_0[1] + .001*np.random.randn()
     
-    # if view:
-    #     if not nt % view:
-            # im.set_data(p_0)
-            # plt.pause(1e-12)
+    if view:
+        if not nt % view:
+            im.set_data(p_0)
+            plt.pause(1e-12)
 
 #%%
 print("#########################################################")
@@ -190,7 +190,7 @@ print(f"Source 2 position: xs={xs2} ys={ys2}")
 print(f"DE.x result = {de_output.x} rounding -> xs1_est={xs1_est}, ys1_est={ys1_est}, xs2_est={xs2_est}, ys2_est={ys2_est}")
 print(f"Final error: {de_output.fun}")
 
-# fonte_encontrada = emulate_source(xs1_est, ys1_est, xs2_est, ys2_est, s, Nt, Nx, Ny, a1, a2, c2, h, view=True)
+fonte_encontrada = emulate_source(xs1_est, ys1_est, xs2_est, ys2_est, s, Nt, Nx, Ny, a1, a2, c2, h, view=True)
 
 plt.figure()
 plt.imshow(np.zeros((Ny, Nx)), cmap='gray', extent=[0, Nx, 0, Ny], origin='lower')

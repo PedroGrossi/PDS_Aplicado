@@ -1,0 +1,9 @@
+https://ieeexplore.ieee.org/document/1203207
+
+interpolate y(qualquer) para gerar tentativa de x (x^n) - melhor usar a que não tem deslocamento para ficar do mesmo tamanho da x original
+utilizar essa estimativa de x na equação 8 (esquecer a parte do alfa, se concentrar no somatorio) (beta é arbitrário 1e-3)
+isso ira gerar o x^(n+1) -> estimativa melhor que o chute original
+utilizar a MSE com a melhor estimativa e a img original -> repetir o processo
+
+W -> degradações
+W^t -> degradações transpostas
